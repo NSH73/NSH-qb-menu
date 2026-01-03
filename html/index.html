@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>QB Menu</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+        <!-- Font Awesome Icons Import -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+        <link rel="stylesheet" href="./style.css" />
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="scroll-arrow-left" class="scroll-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            <div id="buttons"></div>
+            <div id="scroll-arrow-right" class="scroll-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+            
+            <!-- Premium Scroll Progress Bar -->
+            <div class="scroll-progress-track">
+                <div class="scroll-progress-handle"></div>
+            </div>
+            <div id="imageHover">
+                <img id="image" />
+            </div>
+        </div>
+        <div class="keyboard-hint">
+            <kbd>←</kbd> <kbd>→</kbd> Navigate • <kbd>Enter</kbd> Select • <kbd>Scroll</kbd> Move
+        </div>
+    </body>
+</html>

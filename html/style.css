@@ -1,0 +1,885 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+    /* Enterprise Premium Theme - Dark Cyber Orange */
+    --accent-primary: #ff6b00; /* Darker, punchier orange */
+    --accent-secondary: #ff8c00; /* Dark Orange highlight */
+    --accent-tertiary: #cc5500; /* Deep burnt orange for depth */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.9);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(255, 107, 0, 0.6);
+    --glow-primary: rgba(255, 107, 0, 0.4);
+    --glow-secondary: rgba(255, 140, 0, 0.2);
+    
+    /* Typography */
+    --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-size-xs: 10px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    
+    /* Spacing */
+    --space-xs: 6px;
+    --space-sm: 10px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    
+    /* Radius */
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+}
+
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background: transparent !important;
+    overflow: hidden;
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hard force transparency in NUI (prevents black compositor layers) */
+body, #container, #buttons {
+    background: transparent !important;
+}
+
+/* Hide scrollbars globally but allow scroll */
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Main Container - Completely Transparent */
+#container {
+    position: fixed;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100vw;
+    max-width: 100vw;
+    background: transparent !important;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 200ms ease-out, visibility 0s linear 200ms;
+    overflow: visible;
+
+    /* Center the scroller, but don't let content grow past the viewport */
+    display: flex;
+    justify-content: center;
+}
+
+#container.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 200ms ease-out;
+}
+
+/* Menu Title Header - AAA Command Center */
+#menu-header {
+    position: fixed;
+    bottom: 280px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    padding: 14px 60px; /* Reduced padding */
+    min-width: 500px;    /* Reduced width */
+    max-width: 700px;
+    text-align: center;
+    
+    /* Tech Background: Dark Matte with subtle grid */
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        rgba(8, 8, 10, 0.98);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    background-position: center center;
+    
+    /* Sharp Tech Shape with slight rounding */
+    border-radius: 6px;
+    
+    /* Tech Border */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+    
+    /* Cinematic Shadow */
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.95), /* Deep ambient shadow */
+        0 0 0 1px rgba(0, 0, 0, 0.5), /* Outline */
+        0 0 40px rgba(255, 107, 0, 0.05); /* Very subtle orange glow */
+        
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: headerFloatUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Top Accent "Power Bar" */
+#menu-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--accent-primary) 20%, 
+        var(--accent-primary) 80%, 
+        transparent 100%
+    );
+    display: block;
+    z-index: 1;
+    box-shadow: 0 0 20px var(--accent-primary);
+}
+
+/* Header Shimmer Effect - High Tech Scan */
+#menu-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 20%; /* Thinner, sharper beam */
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    transform: skewX(-25deg);
+    animation: shimmer 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+#menu-header.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes headerFloatUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+@keyframes textShine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+#menu-header .header {
+    font-size: 20px; /* Smaller, cleaner */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Reduced tracking */
+    margin: 0;
+    line-height: 1.1;
+    transform: none;
+    
+    /* Solid White */
+    color: #ffffff;
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    
+    /* Tech Glow */
+    text-shadow: 0 0 15px rgba(255, 107, 0, 0.5);
+    
+    animation: none;
+    position: relative;
+    display: inline-block;
+}
+
+/* Decorative "Data" lines next to text */
+#menu-header .header::after {
+    content: '///';
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--accent-primary);
+    opacity: 0.6;
+    letter-spacing: 2px;
+}
+
+#menu-header .header::before {
+    content: '///';
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--accent-primary);
+    opacity: 0.6;
+    letter-spacing: 2px;
+}
+
+#menu-header .text {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5); /* Muted white */
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    transform: none;
+    opacity: 1;
+    text-shadow: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Separator line */
+    display: inline-block;
+    padding-top: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Buttons Container - Transparent */
+#buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: 20px 80px;
+    background: transparent !important;
+    pointer-events: auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 850px;
+    /* Removed scroll-snap for smoother mouse wheel experience */
+    /* scroll-snap-type: x mandatory; */
+    scroll-padding: 0 80px;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+/* When there are many items, align to the start and make compact */
+#buttons.scrollable {
+    justify-content: flex-start;
+    gap: var(--space-sm);
+    position: relative;
+}
+
+/* Scroll fade indicators - REMOVED per user request */
+/*
+#buttons.scrollable::before,
+#buttons.scrollable::after {
+    display: none;
+}
+*/
+
+#buttons.scrollable .button,
+#buttons.scrollable .title {
+    min-width: 220px;
+    max-width: 220px;
+    width: 220px;
+    height: 85px;
+    padding: var(--space-sm) var(--space-md);
+}
+
+/* Premium Card Style - AAA Tech */
+.button, .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-md);
+    min-width: 240px;
+    max-width: 240px;
+    width: 240px;
+    height: 90px;
+    padding: var(--space-md) var(--space-lg);
+    /* Darker, flatter tech background */
+    background: rgba(10, 10, 12, 0.95);
+    /* Disabled because FiveM NUI can render this as black */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* Tech Border */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 2px solid rgba(255, 255, 255, 0.1); /* Subtle left accent */
+    border-radius: 4px; /* Sharper corners for tech look */
+    color: var(--text-primary);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    /* Optimized transitions - do not transition transform to allow smooth scrolling */
+    transition: background 0.2s, border 0.2s, box-shadow 0.2s, opacity 0.2s;
+    pointer-events: all;
+    
+    --scroll-y: 0px;
+    --scroll-scale: 1;
+    --scroll-opacity: 1;
+    --hover-y: 0px;
+    --hover-scale: 1;
+
+    opacity: var(--scroll-opacity);
+    transform: translateY(calc(var(--scroll-y) + var(--hover-y))) scale(calc(var(--scroll-scale) * var(--hover-scale)));
+    animation: cardEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    /* scroll-snap-align: start; */
+    scroll-snap-stop: normal;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Corner Cut Effect (Tech) */
+.button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(225deg, rgba(255, 255, 255, 0.1) 50%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Premium Shimmer Effect */
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 107, 0, 0.05) 40%, /* Subtle orange tint */
+        rgba(255, 255, 255, 0.15) 50%, /* White core */
+        rgba(255, 107, 0, 0.05) 60%,
+        transparent 100%
+    );
+    transform: skewX(-25deg);
+    pointer-events: none;
+    animation: shimmer 8s infinite linear; /* Slower, more elegant */
+}
+
+@keyframes shimmer {
+    0% { left: -150%; }
+    20% { left: 150%; }
+    100% { left: 150%; }
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: var(--scroll-opacity);
+        transform: translateY(calc(var(--scroll-y) + var(--hover-y))) scale(calc(var(--scroll-scale) * var(--hover-scale)));
+    }
+}
+
+/* Subtle shine overlay - REPLACED by Shimmer above */
+/*
+.button::before, .title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%
+    );
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+*/
+
+/* Glow border effect */
+.button::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--accent-primary), transparent 40%, transparent 60%, var(--accent-secondary));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    filter: blur(8px);
+}
+
+/* Hover State */
+.button:hover {
+    --hover-y: -4px;
+    --hover-scale: 1.02;
+    /* Lighter, "active" tech state */
+    background: rgba(255, 107, 0, 0.1); /* Subtle orange tint */
+    border-color: var(--accent-primary);
+    border-left-width: 4px; /* Thicker accent on hover */
+    /* Neon Glow Effect - Stronger */
+    box-shadow: 
+        0 0 30px rgba(255, 107, 0, 0.2), /* Stronger outer glow */
+        inset 0 0 20px rgba(255, 107, 0, 0.05);
+    z-index: 5;
+    /* Ensure opacity is full on hover regardless of scroll position */
+    opacity: 1 !important;
+}
+
+.button:hover::after {
+    background: linear-gradient(225deg, var(--accent-primary) 50%, transparent 50%);
+}
+
+/*
+.button:hover::before {
+    left: 100%;
+}
+*/
+
+.button:hover::after {
+    opacity: 0.35;
+}
+
+/* Active/Press State */
+.button:active {
+    --hover-y: -2px;
+    --hover-scale: 1.02;
+    transition-duration: 0.1s;
+}
+
+/* Selected State (Keyboard Navigation) */
+.button.selected {
+    --hover-y: -4px;
+    --hover-scale: 1.02;
+    background: rgba(255, 107, 0, 0.15);
+    border-color: var(--accent-primary);
+    border-left-width: 4px;
+    box-shadow: 
+        0 0 40px rgba(255, 107, 0, 0.3),
+        inset 0 0 30px rgba(255, 107, 0, 0.1);
+    z-index: 5;
+}
+
+.button.selected::after {
+    background: linear-gradient(225deg, var(--accent-primary) 50%, transparent 50%);
+    opacity: 1;
+    animation: none;
+}
+
+@keyframes selectedPulse {
+    0%, 100% { opacity: 0.5; filter: blur(8px); }
+    50% { opacity: 0.7; filter: blur(10px); }
+}
+
+/* Title Card (Hidden - using menu-header instead) */
+.title {
+    display: none !important;
+}
+
+/* Disabled State */
+.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    filter: grayscale(0.8);
+    pointer-events: all;
+}
+
+.disabled:hover {
+    --hover-y: 0px !important;
+    --hover-scale: 1 !important;
+    background: linear-gradient(135deg, rgba(20, 20, 25, 0.85), rgba(10, 10, 15, 0.9)) !important;
+    border-color: var(--border-light) !important;
+    box-shadow: none !important;
+    transform: translateY(var(--scroll-y)) scale(var(--scroll-scale)) !important; /* Force exact scroll position */
+    z-index: 1 !important; /* Prevent z-index pop */
+    opacity: 0.35 !important; /* Keep disabled opacity */
+}
+
+.disabled:hover .icon {
+    transform: none !important;
+    filter: none !important;
+    color: var(--text-muted) !important;
+}
+
+.disabled:active {
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0) translateY(var(--scroll-y)); }
+    25% { transform: translateX(-4px) translateY(var(--scroll-y)); }
+    75% { transform: translateX(4px) translateY(var(--scroll-y)); }
+}
+
+/* Icon Container */
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    color: var(--accent-primary);
+    transition: all 0.3s ease;
+}
+
+.icon i {
+    font-size: inherit;
+    color: inherit;
+}
+
+.icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Hide empty icon containers */
+.icon:empty {
+    display: none;
+}
+
+/* Icon hover effect */
+.button:hover .icon {
+    color: var(--text-primary);
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px var(--glow-primary));
+}
+
+.title .icon {
+    color: var(--text-primary);
+}
+
+.disabled .icon {
+    color: var(--text-muted);
+    filter: none;
+}
+
+/* Text Content */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    align-items: flex-start;
+}
+
+.header {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.text {
+    font-size: var(--font-size-xs);
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 100%;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.title .header {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress-track {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; /* Wider for better visibility */
+    height: 8px; /* Thicker track */
+    background: rgba(255, 255, 255, 0.1); /* Glassy transparent track */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10001;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+.scroll-progress-track.visible {
+    opacity: 1;
+}
+
+/* The sliding handle (rectangle) */
+.scroll-progress-handle {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 60px; /* Wider handle */
+    height: 14px; /* Taller handle */
+    background: linear-gradient(180deg, #ff8c00, #ff6b00); /* Dark Orange Gradient */
+    border-radius: 10px;
+    box-shadow: 
+        0 0 20px rgba(255, 107, 0, 0.6),
+        0 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.1s linear;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Scroll Arrows - High Visibility */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; /* Larger touch target */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 20, 25, 0.9);
+    border: 1px solid var(--accent-primary); /* Orange border */
+    border-radius: 50%;
+    color: var(--accent-primary);
+    font-size: 24px; /* Larger icon */
+    cursor: pointer;
+    z-index: 10002;
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 10px var(--glow-primary); /* Glow */
+}
+
+.scroll-arrow.visible {
+    opacity: 1;
+    pointer-events: all;
+    animation: arrowPulse 2s infinite;
+}
+
+@keyframes arrowPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 107, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+}
+
+.scroll-arrow:hover {
+    background: var(--accent-primary);
+    color: #000;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 30px var(--accent-primary);
+}
+    box-shadow: 0 0 20px var(--accent-primary);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+#scroll-arrow-left {
+    left: calc(50% - 480px); /* Adjusted: Farther from menu cards */
+}
+
+#scroll-arrow-right {
+    right: auto;
+    left: calc(50% + 430px); /* Adjusted: Farther from menu cards */
+}
+
+/* Image Preview */
+#imageHover {
+    position: fixed;
+    bottom: 380px; /* Moved up to avoid header overlap */
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 9998;
+    display: none;
+    animation: imageFadeIn 0.3s ease-out;
+}
+
+@keyframes imageFadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+#image {
+    max-height: 30vh;
+    max-width: 30vw;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-accent);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.5) !important; /* Slight dark backing for visibility */
+    box-shadow: 0 0 60px var(--glow-primary);
+}
+
+/* Keyboard Navigation Hint - Minimalist */
+.keyboard-hint {
+    position: fixed;
+    bottom: 30px; /* Lower down */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6); /* More subtle text */
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    white-space: nowrap;
+    
+    /* Removed the "Black Box" */
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Ensure readability */
+}
+
+.keyboard-hint.visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.keyboard-hint kbd {
+    display: inline-block;
+    padding: 4px 10px;
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-primary); /* Orange text */
+    background: transparent; /* Removed keycap background */
+    border: none; /* Removed border */
+    border-bottom: none;
+    border-radius: 0;
+    margin: 0 2px;
+    box-shadow: none;
+    text-transform: uppercase;
+}
+
+/* 4K Display Support */
+@media (min-width: 3000px) {
+    :root {
+        --font-size-xs: 14px;
+        --font-size-sm: 16px;
+        --font-size-md: 20px;
+        --font-size-lg: 24px;
+        --space-xs: 10px;
+        --space-sm: 16px;
+        --space-md: 24px;
+        --space-lg: 36px;
+        --radius-lg: 28px;
+    }
+    
+    #container {
+        bottom: 150px;
+    }
+    
+    #menu-header {
+        bottom: 350px;
+        min-width: 400px;
+        max-width: 800px;
+    }
+    
+    #menu-header .header {
+        font-size: 26px;
+    }
+    
+    #buttons {
+        max-width: 1400px;
+        gap: var(--space-lg);
+    }
+    
+    .button, .title {
+        min-width: 340px;
+        max-width: 340px;
+        width: 340px;
+        height: 130px;
+        padding: var(--space-lg) var(--space-lg);
+    }
+    
+    .icon {
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+    }
+    
+    .icon img {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .keyboard-hint {
+        bottom: 80px;
+    }
+}
+
+/* 1440p Display Support */
+@media (min-width: 2000px) and (max-width: 2999px) {
+    :root {
+        --font-size-xs: 12px;
+        --font-size-sm: 14px;
+        --font-size-md: 17px;
+        --font-size-lg: 20px;
+    }
+    
+    .button, .title {
+        min-width: 280px;
+        max-width: 280px;
+        width: 280px;
+        height: 110px;
+    }
+    
+    .icon {
+        width: 48px;
+        height: 48px;
+        font-size: 28px;
+    }
+}
+
+/* Ensure no backgrounds anywhere */
+div, span, p, i, img {
+    background-color: transparent !important;
+}
