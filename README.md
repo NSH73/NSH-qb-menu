@@ -12,6 +12,7 @@ Premium Menu System for the QBCore Framework
 - ✨ **Professional Animations** - Smooth transitions and glow effects
 - 🎯 **Auto-centering** - Selected items automatically scroll into view
 - 🚀 **Performance Optimized** - Minimal FPS impact with efficient rendering
+<img width="1059" height="386" alt="image" src="https://github.com/user-attachments/assets/6fe166e2-c57a-48b1-9b42-de7ff5b7f6f0" />
 
 ## Menu Item
 
